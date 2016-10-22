@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NeoRoute Collector</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <string name="lets_go">Let\'s go!</string>
+    <string name="sign_in">Sign-In</string>
+
+    <string name="err_username_empty">Please enter your username</string>
+    <string name="err_password_empty">Please enter your password</string>
 </resources>
