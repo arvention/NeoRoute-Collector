@@ -1,5 +1,8 @@
 package com.arvention.neoroutecollector.activity;
 
+import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,78 +12,80 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.arvention.neoroutecollector.R;
-import com.arvention.neoroutecollector.helper.PasswordTextWatcher;
-import com.arvention.neoroutecollector.helper.TextValidator;
-import com.arvention.neoroutecollector.helper.TextValidatorContext;
-import com.arvention.neoroutecollector.helper.UsernameTextWatcher;
+import com.arvention.neoroutecollector.helper.FieldTextWatcher;
+import com.arvention.neoroutecollector.helper.PasswordFieldTextWatcher;
+import com.arvention.neoroutecollector.helper.UsernameFieldTextWatcher;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private ImageView icon;
+    private CoordinatorLayout splashActivityCoordinator;
 
-    private EditText editTextUsername;
-    private EditText editTextPassword;
-    private TextInputLayout textInputLayoutUsername;
-    private TextInputLayout textInputLayoutPassword;
+    private ImageView splashIcon;
 
-    private Button buttonLetsGo;
-    private Button buttonSignIn;
+    private EditText splashEditTextUsername;
+    private EditText splashEditTextPassword;
+    private TextInputLayout splashTextInputLayoutUsername;
+    private TextInputLayout splashTextInputLayoutPassword;
+
+    private Button splashButtonLetsGo;
+    private Button splashButtonSignIn;
 
     private Animation rotateIndefinitely;
 
-    private UsernameTextWatcher usernameTextWatcher;
-    private PasswordTextWatcher passwordTextWatcher;
+    private FieldTextWatcher textWatcherUsername;
+    private FieldTextWatcher textWatcherPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        icon = (ImageView) findViewById(R.id.icon);
+        splashActivityCoordinator = (CoordinatorLayout) findViewById(R.id.activity_splash_coordinator);
 
-        editTextUsername = (EditText) findViewById(R.id.edit_text_username);
-        editTextPassword = (EditText) findViewById(R.id.edit_text_password);
-        textInputLayoutUsername = (TextInputLayout) findViewById(R.id.text_input_layout_username);
-        textInputLayoutPassword = (TextInputLayout) findViewById(R.id.text_input_layout_password);
+        splashIcon = (ImageView) findViewById(R.id.splash_icon);
 
-        buttonLetsGo = (Button) findViewById(R.id.button_lets_go);
-        buttonSignIn = (Button) findViewById(R.id.button_sign_in);
+        splashEditTextUsername = (EditText) findViewById(R.id.splash_edit_text_username);
+        splashEditTextPassword = (EditText) findViewById(R.id.splash_edit_text_password);
+        splashTextInputLayoutUsername = (TextInputLayout) findViewById(R.id.splash_text_input_layout_username);
+        splashTextInputLayoutPassword = (TextInputLayout) findViewById(R.id.splash_text_input_layout_password);
+
+        splashButtonLetsGo = (Button) findViewById(R.id.splash_button_lets_go);
+        splashButtonSignIn = (Button) findViewById(R.id.splash_button_sign_in);
 
         rotateIndefinitely = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_indefinitely);
 
-        usernameTextWatcher = new UsernameTextWatcher(editTextUsername, textInputLayoutUsername, this);
-        passwordTextWatcher = new PasswordTextWatcher(editTextPassword, textInputLayoutPassword, this);
+        textWatcherUsername = new UsernameFieldTextWatcher(splashEditTextUsername, splashTextInputLayoutUsername, getString(R.string.err_splash_username_empty), this);
+        textWatcherPassword = new PasswordFieldTextWatcher(splashEditTextPassword, splashTextInputLayoutPassword, getString(R.string.err_splash_password_empty), this);
 
-        icon.startAnimation(rotateIndefinitely);
-        editTextUsername.addTextChangedListener(usernameTextWatcher);
-        editTextPassword.addTextChangedListener(passwordTextWatcher);
+        splashIcon.startAnimation(rotateIndefinitely);
 
         addListeners();
     }
 
     private void addListeners(){
-        buttonLetsGo.setOnClickListener(new View.OnClickListener() {
+
+        splashEditTextUsername.addTextChangedListener(textWatcherUsername);
+        splashEditTextPassword.addTextChangedListener(textWatcherPassword);
+
+        splashButtonLetsGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextValidatorContext usernameValidator = new TextValidatorContext(usernameTextWatcher);
-                TextValidatorContext passwordValidator = new TextValidatorContext(passwordTextWatcher);
 
-                if(usernameValidator.executeValidation() && passwordValidator.executeValidation()){
+                if(!textWatcherUsername.isEmpty() && !textWatcherPassword.isEmpty()){
                     // try to log in
 
                     // if success
-                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(splashActivityCoordinator, SplashActivity.this.getString(R.string.welcome_to_neoroute), Snackbar.LENGTH_LONG).show();
                 }
             }
         });
 
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+        splashButtonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // go to Sign In activity
+                startActivity(new Intent(SplashActivity.this, SignUpActivity.class));
             }
         });
     }

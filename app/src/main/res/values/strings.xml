@@ -1,12 +1,23 @@
 <resources>
     <string name="app_name">NeoRoute Collector</string>
+    <string name="welcome_to_neoroute">Welcome to NeoRoute Collector!</string>
+    <string name="thanks_for_signing_up">Thank you! You can now log-in!</string>
 
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="email">Email Address</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
 
     <string name="lets_go">Let\'s go!</string>
-    <string name="sign_in">Sign-In</string>
+    <string name="sign_up">Sign-Up</string>
 
-    <string name="err_username_empty">Please enter your username</string>
-    <string name="err_password_empty">Please enter your password</string>
+    <string name="err_splash_username_empty">Oops! You forgot to enter your username.</string>
+    <string name="err_splash_password_empty">No Password == No Entry :((</string>
+
+    <string name="err_sign_up_firstname_empty">Tell me your first name :)</string>
+    <string name="err_sign_up_lastname_empty">Tell me your last name~ Don\'t be shy.</string>
+    <string name="err_sign_up_email_empty">Let\'s be pen pals online! Share me your email.</string>
+    <string name="err_sign_up_username_empty">Tell me your alias - short and concise.</string>
+    <string name="err_sign_up_password_empty">Oh no! Secure your account with a password.</string>
 </resources>
